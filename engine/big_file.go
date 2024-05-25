@@ -2,7 +2,6 @@ package engine
 
 import (
 	"bufio"
-	"io"
 	"os"
 )
 
@@ -16,27 +15,28 @@ func (e bigFileExecutor) computeFileLines(path string) (int, error) {
 	}
 	defer f.Close()
 	var lines int
-	r := bufio.NewReader(f)
-	for {
-		_, err = r.ReadString('\n')
-		if err == io.EOF || err != nil {
-			break
-		}
-		lines += 1
+	// 使用bufio.Scanner读取文件
+	scanner := bufio.NewScanner(f)
+
+	// 计数器
+
+	// 逐行扫描文件
+	for scanner.Scan() {
+		lines++
 	}
 	return lines, nil
 }
 
 func (e bigFileExecutor) computeFilesLines(path string, config Config) (int, map[string]interface{}, error) {
 
-	isD, err := isDir(path)
+	isDir, err := isDirectory(path)
 	if err != nil {
 		return 0, nil, err
 	}
 	bigFileNum := 0
 	details := map[string]interface{}{}
 
-	if isD {
+	if isDir {
 		goFiles, err := findGoFiles(path)
 		if err != nil {
 			return 0, nil, err
@@ -54,9 +54,7 @@ func (e bigFileExecutor) computeFilesLines(path string, config Config) (int, map
 
 		return bigFileNum, details, nil
 	}
-
 	lines, err := e.computeFileLines(path)
-
 	if err != nil {
 		return 0, nil, err
 	}
@@ -76,7 +74,7 @@ func (e bigFileExecutor) Compute(param Parameter, config Config) Summary {
 	for _, path := range param.Path {
 		bigFileNum, detail, err := e.computeFilesLines(path, config)
 		if err != nil {
-			return Summary{Name: BigFile, ErrMsg: err.Error()}
+			return Summary{Name: BigFile, Err: err}
 		}
 		totalBigFileNum += bigFileNum
 		detailList = append(detailList, detail)

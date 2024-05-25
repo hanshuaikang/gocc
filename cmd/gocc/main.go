@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/hanshuaikang/gocc/engine"
-	"gopkg.in/yaml.v2"
 	"io"
 	"log"
 	"os"
+
+	"github.com/hanshuaikang/gocc/engine"
+	"gopkg.in/yaml.v2"
 )
 
 const usageDoc = `Analyze the code quality of your GO project, including the complexity of the circle, the grammatical errors ...
@@ -35,9 +36,8 @@ func main() {
 	if *configFile != "" {
 		config, err = parseConfig(*configFile)
 		if err != nil {
-			msg := fmt.Sprintf("gcc run err : load config yaml failed: %s", err.Error())
-			_, _ = fmt.Fprint(os.Stderr, msg)
-			os.Exit(2)
+			_, _ = fmt.Fprintf(os.Stderr, "gcc run err : load config yaml failed: %s", err.Error())
+			os.Exit(1)
 		}
 	}
 
@@ -54,16 +54,14 @@ func main() {
 func printOutputToFile(summaryList []engine.Summary) {
 	output, err := json.MarshalIndent(summaryList, "", "  ")
 	if err != nil {
-		msg := fmt.Sprintf("gcc run err : print output to json file failed, json marshal err : %s", err.Error())
-		_, _ = fmt.Fprint(os.Stderr, msg)
-		os.Exit(2)
+		_, _ = fmt.Fprintf(os.Stderr, "gcc run err : print output to json file failed, json marshal err : %s", err.Error())
+		os.Exit(1)
 
 	}
 	err = writeFile(output)
 	if err != nil {
-		msg := fmt.Sprintf("gcc run err : print output to json file failed, wirte json file err : %s", err.Error())
-		_, _ = fmt.Fprint(os.Stderr, msg)
-		os.Exit(2)
+		_, _ = fmt.Fprintf(os.Stderr, "gcc run err : print output to json file failed, wirte json file err : %s", err.Error())
+		os.Exit(1)
 	}
 }
 
@@ -79,7 +77,6 @@ func parseConfig(path string) (engine.Config, error) {
 	decoder := yaml.NewDecoder(file)
 	err = decoder.Decode(&config)
 	if err != nil {
-		fmt.Println("Error:", err)
 		return engine.Config{}, err
 	}
 	return config, nil
@@ -95,7 +92,7 @@ func writeFile(output []byte) error {
 
 	_, err = io.WriteString(file, string(output))
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	return err

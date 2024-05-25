@@ -51,11 +51,11 @@ func TestBigFileExecutor_Compute_Failed(t *testing.T) {
 	}
 	summary := executor.Compute(param, Config{})
 
-	if len(summary.ErrMsg) == 0 {
+	if summary.Err == nil {
 		t.Errorf(" bigfile executor compute faild, the result should error")
 	}
 
-	if !strings.EqualFold(summary.ErrMsg, "stat ./xxxxx/: no such file or directory") {
+	if !strings.EqualFold(summary.Err.Error(), "stat ./xxxxx/: no such file or directory") {
 		t.Errorf(" bigfile executor compute failed, the errMsg should equal 'stat ./xxxxx/: no such file or directory' ")
 	}
 

@@ -2,6 +2,8 @@ package engine
 
 import (
 	"fmt"
+	"regexp"
+
 	"github.com/fzipp/gocyclo"
 )
 
@@ -23,9 +25,13 @@ func (c cyclomaticComplexityExecutor) buildDetails(stats gocyclo.Stats) map[stri
 
 func (c cyclomaticComplexityExecutor) Compute(param Parameter, config Config) Summary {
 
-	re, err := regex(config.Cyclo.IgnoreRegx)
-	if err != nil {
-		return Summary{Name: CyclomaticComplexity, ErrMsg: err.Error()}
+	var re *regexp.Regexp
+	var err error
+	if len(config.Cyclo.IgnoreRegx) != 0 {
+		re, err = regex(config.Cyclo.IgnoreRegx)
+		if err != nil {
+			return Summary{Name: CyclomaticComplexity, Err: err}
+		}
 	}
 
 	stats := gocyclo.Analyze(param.Path, re)

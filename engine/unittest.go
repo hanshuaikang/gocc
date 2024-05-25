@@ -36,16 +36,16 @@ func (e unitTestExecutor) Compute(param Parameter, config Config) Summary {
 	err := cmd.Run()
 	outPut := out.String()
 	if err != nil {
-		return Summary{Name: UintTest, ErrMsg: fmt.Sprintf("err: %s, output: %s", err.Error(), outPut)}
+		return Summary{Name: UintTest, Err: fmt.Errorf("err: %s, output: %s", err.Error(), outPut)}
 	}
 
 	if len(outPut) == 0 {
-		return Summary{Name: UintTest, ErrMsg: "cmd output is empty"}
+		return Summary{Name: UintTest, Err: fmt.Errorf("go test cmd output is empty")}
 	}
 
 	coverage, err := e.parseOutPut(outPut)
 	if err != nil {
-		return Summary{Name: UintTest, ErrMsg: err.Error()}
+		return Summary{Name: UintTest, Err: err}
 	}
 
 	return Summary{

@@ -29,7 +29,7 @@ func findGoFiles(dirPath string) ([]string, error) {
 }
 
 // isDir determine whether a path is a folder
-func isDir(path string) (bool, error) {
+func isDirectory(path string) (bool, error) {
 	fileInfo, err := os.Stat(path)
 	if err != nil {
 		return false, err
@@ -51,14 +51,7 @@ func mergeDetails(detailList []map[string]interface{}) map[string]interface{} {
 
 // regex str cover to regexp.Regexp object
 func regex(expr string) (*regexp.Regexp, error) {
-	if expr == "" {
-		return nil, nil
-	}
-	re, err := regexp.Compile(expr)
-	if err != nil {
-		return nil, err
-	}
-	return re, nil
+	return regexp.Compile(expr)
 }
 
 // round retain the latter two of the float64 value

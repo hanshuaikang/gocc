@@ -45,14 +45,13 @@ func (e longFuncExecutor) computeFuncLength(path string, config Config) (int, ma
 }
 
 func (e longFuncExecutor) computeFuncLengths(path string, config Config) (int, map[string]interface{}, error) {
-
-	isD, err := isDir(path)
+	isDir, err := isDirectory(path)
 	if err != nil {
 		return 0, nil, nil
 	}
 	longFuncNum := 0
 
-	if isD {
+	if isDir {
 		goFiles, err := findGoFiles(path)
 		var detailsList []map[string]interface{}
 		if err != nil {
@@ -85,7 +84,7 @@ func (e longFuncExecutor) Compute(param Parameter, config Config) Summary {
 	for _, path := range param.Path {
 		num, detail, err := e.computeFuncLengths(path, config)
 		if err != nil {
-			return Summary{Name: LongFunc, ErrMsg: err.Error()}
+			return Summary{Name: LongFunc, Err: err}
 		}
 		longFuncNum += num
 		detailList = append(detailList, detail)
