@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"log"
 	"os"
 
 	"github.com/hanshuaikang/gocc/engine"
@@ -25,8 +24,6 @@ func main() {
 
 	configFile := flag.String("config", "", "the gocc config file path")
 
-	log.SetFlags(0)
-	log.SetPrefix("gocc: ")
 	flag.Usage = usage
 
 	flag.Parse()
