@@ -6,3 +6,8 @@ const (
 	BigFile              = "bigfile"
 	LongFunc             = "longfunc"
 )
+
+const (
+	Json    = "json"
+	Console = "console"
+)
