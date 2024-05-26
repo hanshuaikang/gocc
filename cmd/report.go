@@ -16,20 +16,20 @@ func report(summaryList []engine.Summary, reportType string) {
 	case engine.Console:
 		reportConsole(summaryList)
 	default:
-		_, _ = fmt.Fprintf(os.Stderr, "gcc run err : unsupport report type : %s", reportType)
+		fmt.Fprintf(os.Stderr, "gcc run err : unsupport report type : %s", reportType)
 	}
 }
 
 func reportJsonFile(summaryList []engine.Summary) {
 	output, err := json.MarshalIndent(summaryList, "", "  ")
 	if err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "gcc run err : print output to json file failed, json marshal err : %s", err.Error())
+		fmt.Fprintf(os.Stderr, "gcc run err : print output to json file failed, json marshal err : %s", err)
 		os.Exit(1)
 
 	}
 	err = writeFile(output, "output.json")
 	if err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "gcc run err : print output to json file failed, wirte json file err : %s", err.Error())
+		fmt.Fprintf(os.Stderr, "gcc run err : print output to json file failed, wirte json file err : %s", err)
 		os.Exit(1)
 	}
 }
@@ -56,9 +56,6 @@ func writeFile(output []byte, fileName string) error {
 	defer file.Close()
 
 	_, err = io.WriteString(file, string(output))
-	if err != nil {
-		return err
-	}
 
 	return err
 
