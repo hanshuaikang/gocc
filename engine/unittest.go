@@ -28,6 +28,7 @@ func (e unitTestExecutor) parseOutPut(output string) (float64, error) {
 
 }
 
+// nolint
 func (e unitTestExecutor) Compute(param Parameter, config Config) Summary {
 	var out bytes.Buffer
 	paths := strings.Join(param.Path, " ")

@@ -13,6 +13,7 @@ func (e bigFileExecutor) computeFileLines(path string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	// nolint:errcheck
 	defer f.Close()
 	var lines int
 	// 使用bufio.Scanner读取文件

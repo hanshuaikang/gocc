@@ -10,7 +10,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "version subcommand show git version info.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("gocc V0.0.1")
+		fmt.Println("gocc V0.0.1 ")
 	},
 }
 

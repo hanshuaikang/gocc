@@ -53,6 +53,7 @@ func writeFile(output []byte, fileName string) error {
 	if err != nil {
 		return err
 	}
+	// nolint:errcheck
 	defer file.Close()
 
 	_, err = io.WriteString(file, string(output))
