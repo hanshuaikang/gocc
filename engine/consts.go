@@ -5,6 +5,7 @@ const (
 	UintTest             = "unittest"
 	BigFile              = "bigfile"
 	LongFunc             = "longfunc"
+	CopyCheck            = "copycheck"
 )
 
 const (

@@ -22,7 +22,6 @@ func (e unitTestExecutor) parseOutPut(output string) (float64, error) {
 			return 0, err
 		}
 		return percentage, nil
-
 	}
 	return 0, fmt.Errorf("no coverage information found in the output, output: %s", output)
 
@@ -36,7 +35,7 @@ func (e unitTestExecutor) Compute(param Parameter, config Config) Summary {
 	err := cmd.Run()
 	outPut := out.String()
 	if err != nil {
-		return Summary{Name: UintTest, Err: fmt.Errorf("err: %s, output: %s", err.Error(), outPut)}
+		return Summary{Name: UintTest, Err: err}
 	}
 
 	if len(outPut) == 0 {

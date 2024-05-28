@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"fmt"
 	"math"
 	"os"
 	"path/filepath"
@@ -35,6 +36,22 @@ func isDirectory(path string) (bool, error) {
 		return false, err
 	}
 	return fileInfo.IsDir(), nil
+}
+
+// checkFilename checks if the given filename matches the provided regex pattern.
+// If the filename matches the pattern, it returns true; otherwise, it returns false.
+func matchRegex(str, pattern string) (bool, error) {
+	if len(pattern) == 0 {
+		return false, nil
+	}
+	// Compile the regular expression pattern
+	re, err := regexp.Compile(pattern)
+	if err != nil {
+		return false, fmt.Errorf("invalid regex pattern: %v", err)
+	}
+	// Check if the filename matches the regex pattern
+	matches := re.MatchString(str)
+	return matches, nil
 }
 
 // mergeDetails merge a list of details

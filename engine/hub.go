@@ -7,4 +7,5 @@ func init() {
 	executeHub[UintTest] = &unitTestExecutor{}
 	executeHub[BigFile] = &bigFileExecutor{}
 	executeHub[LongFunc] = &longFuncExecutor{}
+	executeHub[CopyCheck] = &copyCheckExecutor{}
 }

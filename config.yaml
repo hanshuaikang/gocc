@@ -1,8 +1,11 @@
-reportType: "console"
+reportType: "json"
 bigFile:
   maxLines: 800
 bigFunc:
   maxLength: 80
+copyCheck:
+  threshold: 30
+  ignoreRegx: "_test"
 cycle:
   ignoreRegx: "_test"
 
