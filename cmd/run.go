@@ -36,9 +36,11 @@ var runCmd = &cobra.Command{
 func parseConfig(path string) (engine.Config, error) {
 	// 读取 YAML 文件
 	file, err := os.Open(path)
+	// nolint:errcheck
 	if err != nil {
 		return engine.Config{}, err
 	}
+	// nolint:errcheck
 	defer file.Close()
 
 	var config engine.Config

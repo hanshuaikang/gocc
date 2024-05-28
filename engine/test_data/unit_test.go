@@ -2,6 +2,7 @@ package test_data
 
 import "testing"
 
+// nolint
 func Size(a int) string {
 	switch {
 	case a < 0:
