@@ -1,6 +1,7 @@
 package test_data
 
 // test file
+// nolint
 func bubbleSort(array []int) []int {
 	length := len(array)
 
@@ -14,6 +15,7 @@ func bubbleSort(array []int) []int {
 	return array
 }
 
+// nolint
 func bubbleSort2(array []int) []int {
 	length := len(array)
 
