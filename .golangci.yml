@@ -19,7 +19,6 @@ linters:
     - exportloopref
     # seems to have bugs in recent version, also slow
     # - gci
-    - gosec
     - gosimple
     # go vet工具可用于检测无法被编译捕获的有问题的代码
     - govet

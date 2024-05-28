@@ -47,20 +47,20 @@ func (e longFuncExecutor) computeFuncLength(path string, config Config) (int, ma
 func (e longFuncExecutor) computeFuncLengths(path string, config Config) (int, map[string]interface{}, error) {
 	isDir, err := isDirectory(path)
 	if err != nil {
-		return 0, nil, nil
+		return 0, nil, err
 	}
 	longFuncNum := 0
 
 	if isDir {
-		goFiles, err := findGoFiles(path)
 		var detailsList []map[string]interface{}
+		goFiles, err := findGoFiles(path)
 		if err != nil {
-			return 0, nil, nil
+			return 0, nil, err
 		}
 		for _, file := range goFiles {
 			num, d, err := e.computeFuncLength(file, config)
 			if err != nil {
-				return 0, nil, nil
+				return 0, nil, err
 			}
 			longFuncNum += num
 			detailsList = append(detailsList, d)
@@ -71,7 +71,7 @@ func (e longFuncExecutor) computeFuncLengths(path string, config Config) (int, m
 	// single file
 	num, details, err := e.computeFuncLength(path, config)
 	if err != nil {
-		return 0, nil, nil
+		return 0, nil, err
 	}
 	return num, details, nil
 
