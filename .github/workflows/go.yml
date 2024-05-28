@@ -21,10 +21,13 @@ jobs:
       with:
         go-version: '1.19'
 
+    - name: Tidy Go module
+      run: go mod tidy
+
     - name: Build
       run: go build -v ./...
 
     - name: Test
       run: go test -v ./...
 
-    
+
