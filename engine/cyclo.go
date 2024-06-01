@@ -27,8 +27,8 @@ func (c cyclomaticComplexityExecutor) Compute(param Parameter, config Config) Su
 
 	var re *regexp.Regexp
 	var err error
-	if len(config.Cyclo.IgnoreRegx) != 0 {
-		re, err = regex(config.Cyclo.IgnoreRegx)
+	if len(config.LintersSettings.Cyclo.IgnoreRegx) != 0 {
+		re, err = regex(config.LintersSettings.Cyclo.IgnoreRegx)
 		if err != nil {
 			return Summary{Name: CyclomaticComplexity, Err: err}
 		}

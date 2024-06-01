@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -27,13 +28,36 @@ func (e unitTestExecutor) parseOutPut(output string) (float64, error) {
 
 }
 
+func (e unitTestExecutor) covertPath(paths []string) ([]string, error) {
+
+	var newPaths []string
+
+	for _, path := range paths {
+		isDir, err := isDirectory(path)
+		if err != nil {
+			return nil, err
+		}
+		if isDir {
+			newPaths = append(newPaths, filepath.Join(path, "/..."))
+			continue
+		}
+		newPaths = append(newPaths, path)
+	}
+
+	return newPaths, nil
+}
+
 // nolint
 func (e unitTestExecutor) Compute(param Parameter, config Config) Summary {
 	var out bytes.Buffer
-	paths := strings.Join(param.Path, " ")
-	cmd := exec.Command("go", "test", paths, "-cover")
+
+	paths, err := e.covertPath(param.Path)
+	if err != nil {
+		return Summary{Name: UintTest, Err: err}
+	}
+	cmd := exec.Command("go", "test", strings.Join(paths, " "), "-cover")
 	cmd.Stdout = &out
-	err := cmd.Run()
+	err = cmd.Run()
 	outPut := out.String()
 	if err != nil {
 		return Summary{Name: UintTest, Err: err}

@@ -3,9 +3,10 @@ package engine
 const (
 	CyclomaticComplexity = "cyclo"
 	UintTest             = "unittest"
-	BigFile              = "bigfile"
-	LongFunc             = "longfunc"
-	CopyCheck            = "copycheck"
+	BigFile              = "bigFile"
+	LongFunc             = "longFunc"
+	CopyCheck            = "copyCheck"
+	Security             = "security"
 )
 
 const (

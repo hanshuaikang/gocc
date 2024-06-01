@@ -8,4 +8,5 @@ func init() {
 	executeHub[BigFile] = &bigFileExecutor{}
 	executeHub[LongFunc] = &longFuncExecutor{}
 	executeHub[CopyCheck] = &copyCheckExecutor{}
+	executeHub[Security] = &securityExecutor{}
 }

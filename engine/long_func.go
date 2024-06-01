@@ -35,7 +35,7 @@ func (e longFuncExecutor) computeFuncLength(path string, config Config) (int, ma
 			bodyLength := bodyEnd - bodyStart + 1
 			// example: engine/big_file.go Compute 72:89
 			key := fmt.Sprintf("%s %s %d:%d", path, funcDecl.Name, bodyStart, bodyEnd)
-			if bodyLength > config.LongFunc.MaxLength {
+			if bodyLength > config.LintersSettings.LongFunc.MaxLength {
 				longFuncNum += 1
 			}
 			details[key] = bodyLength

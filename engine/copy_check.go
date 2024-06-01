@@ -41,7 +41,7 @@ func (e copyCheckExecutor) crawlPaths(paths []string, config Config) chan string
 	go func() {
 		defer close(fChan)
 		for _, path := range paths {
-			matched, err := matchRegex(path, config.CopyCheck.IgnoreRegx)
+			matched, err := matchRegex(path, config.LintersSettings.CopyCheck.IgnoreRegx)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "copy check run failed, match regex error, please check your regex")
 				break
@@ -63,7 +63,7 @@ func (e copyCheckExecutor) crawlPaths(paths []string, config Config) chan string
 					return nil
 				}
 				// the IgnoreRegx is checked, not throw err
-				matched, _ = matchRegex(path, config.CopyCheck.IgnoreRegx)
+				matched, _ = matchRegex(path, config.LintersSettings.CopyCheck.IgnoreRegx)
 
 				if matched {
 					return nil
@@ -196,12 +196,12 @@ func (e copyCheckExecutor) Compute(param Parameter, config Config) Summary {
 	// finish stream
 	t.Update(&syntax.Node{Type: -1})
 
-	matchChan := t.FindDuplOver(config.CopyCheck.Threshold)
+	matchChan := t.FindDuplOver(config.LintersSettings.CopyCheck.Threshold)
 	dupChan := make(chan syntax.Match)
 
 	go func() {
 		for m := range matchChan {
-			match := syntax.FindSyntaxUnits(*data, m, config.CopyCheck.Threshold)
+			match := syntax.FindSyntaxUnits(*data, m, config.LintersSettings.CopyCheck.Threshold)
 			if len(match.Frags) > 0 {
 				dupChan <- match
 			}

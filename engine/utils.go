@@ -38,6 +38,45 @@ func isDirectory(path string) (bool, error) {
 	return fileInfo.IsDir(), nil
 }
 
+// IsGoProject 判断给定的目录是否是一个Go项目
+func isGoProject(dir string) (bool, error) {
+
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		return false, err
+	}
+
+	isGoPro := false
+	// WalkDir 遍历目录及其子目录
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// 检查是否存在 go.mod 文件
+		if info.Name() == "go.mod" {
+			isGoPro = true
+			// 找到 go.mod 文件即可确定为Go项目，无需继续遍历
+			return filepath.SkipDir
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return false, err
+	}
+
+	return isGoPro, nil
+}
+
+func getPwd() (string, error) {
+	path, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	return path, nil
+}
+
 func matchRegex(str, pattern string) (bool, error) {
 	if len(pattern) == 0 {
 		return false, nil

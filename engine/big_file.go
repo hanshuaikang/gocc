@@ -47,7 +47,7 @@ func (e bigFileExecutor) computeFilesLines(path string, config Config) (int, map
 			if err != nil {
 				return 0, nil, err
 			}
-			if lines > config.BigFile.MaxLines {
+			if lines > config.LintersSettings.BigFile.MaxLines {
 				bigFileNum += 1
 			}
 			details[file] = lines
@@ -60,7 +60,7 @@ func (e bigFileExecutor) computeFilesLines(path string, config Config) (int, map
 		return 0, nil, err
 	}
 
-	if lines > config.BigFile.MaxLines {
+	if lines > config.LintersSettings.BigFile.MaxLines {
 		bigFileNum += 1
 	}
 	details[path] = lines

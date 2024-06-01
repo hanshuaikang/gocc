@@ -1,11 +1,22 @@
-reportType: "json"
-bigFile:
-  maxLines: 800
-bigFunc:
-  maxLength: 80
-copyCheck:
-  threshold: 30
-  ignoreRegx: "_test"
-cycle:
-  ignoreRegx: "_test"
-
+reportType: "console"
+linters:
+  enable:
+      - bigFile
+      - longFunc
+      - copyCheck
+      - cyclo
+      - unittest
+      - security
+linters-settings:
+  bigFile:
+    maxLines: 800
+  longFunc:
+    maxLength: 80
+  cyclo:
+    ignoreRegx: "_test"
+  security:
+    env:
+      - GOVERSION=go1.19
+  copyCheck:
+    threshold: 50
+    ignoreRegx: "_test"

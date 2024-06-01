@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/hanshuaikang/gocc/engine"
 	"gopkg.in/yaml.v2"
@@ -27,10 +28,22 @@ var runCmd = &cobra.Command{
 			Error(cmd, args, fmt.Errorf("path is empty"))
 		}
 
-		param := engine.Parameter{Path: args}
+		param := engine.Parameter{Path: covertAbsPath(args)}
 		summaryList := engine.RunAllTools(param, config)
 		report(summaryList, config.ReportType)
 	},
+}
+
+func covertAbsPath(paths []string) []string {
+	var absPaths []string
+	for _, path := range paths {
+		abs, err := filepath.Abs(path)
+		if err != nil {
+			Error(nil, paths, fmt.Errorf("path can't not covert to abs path"))
+		}
+		absPaths = append(absPaths, abs)
+	}
+	return absPaths
 }
 
 func parseConfig(path string) (engine.Config, error) {

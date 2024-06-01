@@ -37,12 +37,15 @@ func reportJsonFile(summaryList []engine.Summary) {
 func reportConsole(summaryList []engine.Summary) {
 	fmt.Printf("code analysis is complete. Below is the brief output. Please switch to HTML or JSON output type for detailed output.\n\n")
 	for _, summary := range summaryList {
+		fmt.Printf("Name: %s\n", summary.Name)
 		if summary.Err != nil {
-			fmt.Printf("run %s failed, err: %v\n\n", summary.Name, summary.Err)
+			fmt.Printf("Err: run %s failed, err: %v\n", summary.Name, summary.Err)
+			fmt.Printf("Duration: %vs\n\n", summary.Duration)
 			continue
 		}
-		fmt.Printf("Name: %s\n", summary.Name)
-		fmt.Printf("Value: %v\n\n", summary.Value)
+		fmt.Printf("Value: %v\n", summary.Value)
+		fmt.Printf("Duration: %3.fs\n\n", summary.Duration)
+
 	}
 
 }
