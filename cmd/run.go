@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/hanshuaikang/gocc/engine"
 	"gopkg.in/yaml.v2"
@@ -35,7 +36,17 @@ var runCmd = &cobra.Command{
 func covertAbsPath(paths []string) []string {
 	var absPaths []string
 	for _, path := range paths {
+		file, err := os.Stat(path)
+		if err != nil {
+			Error(nil, paths, fmt.Errorf("path can't not covert to abs path"))
+		}
+
+		if !file.IsDir() && !strings.HasSuffix(path, ".go") {
+			continue
+		}
+
 		abs, err := filepath.Abs(path)
+
 		if err != nil {
 			Error(nil, paths, fmt.Errorf("path can't not covert to abs path"))
 		}
