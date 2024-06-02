@@ -53,6 +53,15 @@ func reportConsole(summaryList []engine.Summary, ignoreError bool) {
 			hasError = true
 			continue
 		}
+
+		// 这些指标如果存在 detail，则说明有不合格的地方
+		switch summary.Name {
+		case engine.Security, engine.BigFile, engine.Syntax, engine.CyclomaticComplexity, engine.LongFunc, engine.CopyCheck:
+			if len(summary.Details) > 0 {
+				hasError = true
+			}
+		}
+
 		fmt.Printf("Value: %v\n", summary.Value)
 		fmt.Printf("Duration: %3.fs\n", summary.Duration)
 		summary.Print()

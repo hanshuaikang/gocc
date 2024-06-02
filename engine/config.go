@@ -73,6 +73,7 @@ func DefaultConfig() Config {
 			BigFile:   BigFileConfig{MaxLines: 800},
 			LongFunc:  LongFuncConfig{MaxLength: 80},
 			CopyCheck: CopyCheckConfig{Threshold: 30},
-			Security:  SecurityConfig{Env: []string{}}},
+			Security:  SecurityConfig{Env: []string{}},
+			Cyclo:     CycloConfig{Over: 15}},
 	}
 }
