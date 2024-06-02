@@ -9,4 +9,5 @@ func init() {
 	executeHub[LongFunc] = &longFuncExecutor{}
 	executeHub[CopyCheck] = &copyCheckExecutor{}
 	executeHub[Security] = &securityExecutor{}
+	executeHub[Syntax] = &syntaxExecutor{}
 }

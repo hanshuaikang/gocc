@@ -18,4 +18,5 @@ func TestSecurityExecutor_Compute(t *testing.T) {
 	if summary.Value <= float64(0) {
 		t.Errorf("run security failed， the value obtained should be greater than 0")
 	}
+
 }

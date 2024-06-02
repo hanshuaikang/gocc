@@ -10,6 +10,7 @@ type LongFuncConfig struct {
 
 type CycloConfig struct {
 	IgnoreRegx string `yaml:"ignoreRegx"`
+	Over       int    `yaml:"over"`
 }
 
 type CopyCheckConfig struct {
@@ -34,6 +35,7 @@ type LintersSettingsConfig struct {
 }
 
 type Config struct {
+	IgnoreError     bool                  `yaml:"ignoreError"`
 	ReportType      string                `yaml:"reportType"`
 	Linters         LintersConfig         `yaml:"linters"`
 	LintersSettings LintersSettingsConfig `yaml:"linters-settings"`
@@ -56,6 +58,10 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 
 	if c.LintersSettings.CopyCheck.Threshold == 0 {
 		c.LintersSettings.CopyCheck.Threshold = 50
+	}
+
+	if c.LintersSettings.Cyclo.Over == 0 {
+		c.LintersSettings.Cyclo.Over = 15
 	}
 
 	return nil

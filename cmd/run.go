@@ -30,7 +30,7 @@ var runCmd = &cobra.Command{
 
 		param := engine.Parameter{Path: covertAbsPath(args)}
 		summaryList := engine.RunAllTools(param, config)
-		report(summaryList, config.ReportType)
+		report(summaryList, config.ReportType, config.IgnoreError)
 	},
 }
 

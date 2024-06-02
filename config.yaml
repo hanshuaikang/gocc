@@ -1,4 +1,5 @@
 reportType: "console"
+ignoreError: false
 linters:
   enable:
       - bigFile
@@ -7,6 +8,7 @@ linters:
       - cyclo
       - unittest
       - security
+      - syntax
 linters-settings:
   bigFile:
     maxLines: 800

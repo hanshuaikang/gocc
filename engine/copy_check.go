@@ -137,6 +137,17 @@ func (e copyCheckExecutor) prepareClonesInfo(duplicateNodes [][]*syntax.Node) ([
 	return clones, nil
 }
 
+func (e copyCheckExecutor) formatClones(clones []Clone) []string {
+	var cloneFiles []string
+
+	for _, c := range clones {
+		cloneFiles = append(cloneFiles, fmt.Sprintf("%s:%d:%d", c.Filename, c.LineStart, c.LineEnd))
+	}
+
+	return cloneFiles
+
+}
+
 func (e copyCheckExecutor) buildDetails(dupChan <-chan syntax.Match) (map[string]interface{}, error) {
 
 	groups := make(map[string][][]*syntax.Node)
@@ -161,7 +172,7 @@ func (e copyCheckExecutor) buildDetails(dupChan <-chan syntax.Match) (map[string
 			return nil, err
 		}
 		sort.Sort(byNameAndLine(clones))
-		details[strconv.Itoa(i)] = clones
+		details[strconv.Itoa(i)] = e.formatClones(clones)
 	}
 
 	return details, nil

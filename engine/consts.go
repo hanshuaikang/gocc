@@ -7,6 +7,7 @@ const (
 	LongFunc             = "longFunc"
 	CopyCheck            = "copyCheck"
 	Security             = "security"
+	Syntax               = "syntax"
 )
 
 const (

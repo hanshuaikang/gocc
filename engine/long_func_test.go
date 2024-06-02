@@ -19,6 +19,7 @@ func TestLongFuncExecutor_Compute(t *testing.T) {
 	}}
 	config := Config{LintersSettings: LintersSettingsConfig{LongFunc: LongFuncConfig{MaxLength: 1}}}
 	summary := executor.Compute(param, config)
+
 	if summary.Value != float64(9) {
 		t.Errorf("big file executor execute failed, the summary value show equal %f != 9.0", summary.Value)
 	}

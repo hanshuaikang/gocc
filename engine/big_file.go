@@ -16,7 +16,6 @@ func (e bigFileExecutor) computeFileLines(path string) (int, error) {
 	// nolint:errcheck
 	defer f.Close()
 	var lines int
-	// 使用bufio.Scanner读取文件
 	scanner := bufio.NewScanner(f)
 
 	// 计数器
@@ -49,8 +48,8 @@ func (e bigFileExecutor) computeFilesLines(path string, config Config) (int, map
 			}
 			if lines > config.LintersSettings.BigFile.MaxLines {
 				bigFileNum += 1
+				details[file] = lines
 			}
-			details[file] = lines
 		}
 
 		return bigFileNum, details, nil
@@ -62,8 +61,8 @@ func (e bigFileExecutor) computeFilesLines(path string, config Config) (int, map
 
 	if lines > config.LintersSettings.BigFile.MaxLines {
 		bigFileNum += 1
+		details[path] = lines
 	}
-	details[path] = lines
 	return bigFileNum, details, nil
 
 }

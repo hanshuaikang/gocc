@@ -39,15 +39,25 @@ func isDirectory(path string) (bool, error) {
 }
 
 // IsGoProject 判断给定的目录是否是一个Go项目
-func isGoProject(dir string) (bool, error) {
+func isGoProject(path string) (bool, error) {
 
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
+	isDir, err := isDirectory(path)
+
+	if err != nil {
+		return false, err
+	}
+
+	if !isDir {
+		return false, nil
+	}
+
+	if _, err = os.Stat(path); os.IsNotExist(err) {
 		return false, err
 	}
 
 	isGoPro := false
 	// WalkDir 遍历目录及其子目录
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
