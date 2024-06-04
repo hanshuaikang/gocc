@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 type unitTestExecutor struct {
@@ -28,14 +30,24 @@ func (e unitTestExecutor) parseOutPut(output string) (float64, error) {
 
 }
 
-func (e unitTestExecutor) computeCoverage() (float64, error) {
+func (e unitTestExecutor) computeCoverage(path string) (float64, error) {
+
+	isDir, err := isDirectory(path)
+	if err != nil {
+		return 0, nil
+	}
+
+	pathArgs := "./..."
+	if !isDir {
+		pathArgs = path
+	}
 
 	var out bytes.Buffer
 
-	cmd := exec.Command("go", "test", "./...", "-cover")
+	cmd := exec.Command("go", "test", pathArgs, "-cover")
 	cmd.Stdout = &out
 
-	err := cmd.Run()
+	err = cmd.Run()
 	outPut := out.String()
 	if err != nil {
 		return 0, errors.New(out.String())
@@ -79,14 +91,20 @@ func (e unitTestExecutor) Compute(param Parameter, config Config) Summary {
 			return Summary{Name: UintTest, Err: err}
 		}
 
+		targetPath := path
 		if !isGoProj {
+			targetPath = filepath.Dir(path)
+		}
+
+		// 如果不是 go 项目 & 不是 测试文件，则放弃执行
+		if !isGoProj && strings.HasSuffix(path, "_test.go") {
 			continue
 		}
-		err = os.Chdir(path)
+		err = os.Chdir(targetPath)
 		if err != nil {
 			return Summary{Name: UintTest, Err: err}
 		}
-		coverage, err := e.computeCoverage()
+		coverage, err := e.computeCoverage(path)
 		if err != nil {
 			return Summary{Name: UintTest, Err: err}
 		}
