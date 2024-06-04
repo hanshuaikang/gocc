@@ -34,11 +34,11 @@
  **usage**
 
 ```bash
-gocc run --config gcc.yaml ..
+gocc run --config ./gcc.yaml .
 
 ## or
 
-gocc run --config gcc.yaml ./files file1.go file2.go
+gocc run --config ./gcc.yaml ./files file1.go file2.go
 ```
 
 ## 配置文件示例
