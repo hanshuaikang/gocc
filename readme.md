@@ -1,6 +1,6 @@
 # gocc
 
-一个用于检测 go 项目 代码质量的工具, 集成多款开源扫描工具并支持可视化 html 输出，支持 圈复杂度，代码重复率,安全漏洞 等多个维度的检查。
+一个用于检测 go 项目 静态代码质量的工具, 集成多款开源扫描工具并支持可视化 html 输出，支持 圈复杂度，代码重复率,安全漏洞 等多个维度的检查。
 
 ### Features
 
@@ -34,11 +34,11 @@
  **usage**
 
 ```bash
-gocc run --config gcc.yaml ..
+gocc run --config ./gcc.yaml .
 
 ## or
 
-gocc run --config gcc.yaml ./files file1.go file2.go
+gocc run --config ./gcc.yaml ./files file1.go file2.go
 ```
 
 ## 配置文件示例
