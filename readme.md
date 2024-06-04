@@ -7,33 +7,33 @@
 - 🚀 更快的执行速度，完全基于本地计算
 - 🚀 集成 gocyclo, dupl, govulncheck 等主流开源工具
 - 🚀 支持 多种输出选项 html console 和 json
-- 丰富的可选配置
+- 🚀 丰富的可选配置
 
 ### 当前版本支持
 
 | 特性      | 支持情况 |
-|---------|------|
-| 圈复杂度    | ✅    |
-| 单元测试覆盖率 | ✅    |
-| 大文件     | ✅    |
-| 长函数     | ✅    |
-| 安全漏洞    | ✅    |
-| 代码重复率   | ✅    |
-| 正则匹配    | ❌    |
-| 语法规范    | ❌    |
+|---------|----|
+| 圈复杂度    | ✅  |
+| 单元测试覆盖率 | ✅  |
+| 大文件     | ✅  |
+| 长函数     | ✅  |
+| 安全漏洞    | ✅  |
+| 代码重复率   | ✅  |
+| 敏感词检测   | ❌  |
+| 语法规范    |  ✅ |
 
 
 ### 使用
 
  **install**
 
+ go install github.com/hanshuaikang/gocc@latest
 
  **usage**
 
 ```bash
 gocc run --config config.yaml path...
 ```
-
 
 ## 配置文件示例
 ```yaml
@@ -61,9 +61,7 @@ linters-settings:
     threshold: 50
     ignoreRegx: "_test"
 
-
 ```
-
 
 
 ## Thanks
