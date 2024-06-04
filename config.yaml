@@ -1,8 +1,0 @@
-reportType: "console"
-bigFile:
-  maxLines: 800
-bigFunc:
-  maxLength: 80
-cycle:
-  ignoreRegx: "_test"
-

@@ -34,11 +34,12 @@ func (e longFuncExecutor) computeFuncLength(path string, config Config) (int, ma
 			bodyEnd := fSet.Position(funcDecl.Body.Rbrace).Line
 			bodyLength := bodyEnd - bodyStart + 1
 			// example: engine/big_file.go Compute 72:89
-			key := fmt.Sprintf("%s %s %d:%d", path, funcDecl.Name, bodyStart, bodyEnd)
-			if bodyLength > config.LongFunc.MaxLength {
+			key := fmt.Sprintf("%s:%d:%d %s", path, bodyStart, bodyEnd, funcDecl.Name)
+			if bodyLength > config.LintersSettings.LongFunc.MaxLength {
 				longFuncNum += 1
+				details[key] = bodyLength
+
 			}
-			details[key] = bodyLength
 		}
 	}
 	return longFuncNum, details, nil

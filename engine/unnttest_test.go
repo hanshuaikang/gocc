@@ -1,15 +1,20 @@
 package engine
 
 import (
+	"path/filepath"
 	"testing"
 )
 
 func TestUnitTest(t *testing.T) {
 
 	unitExecutor := unitTestExecutor{}
-
+	baseDir, err := getPwd()
+	if err != nil {
+		t.Error(err.Error())
+	}
+	testFilePath := filepath.Join(baseDir, "test_data/unit_test.go")
 	param := Parameter{
-		Path: []string{"./test_data/unit_test.go"},
+		Path: []string{testFilePath},
 	}
 	summary := unitExecutor.Compute(param, Config{})
 

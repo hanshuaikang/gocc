@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -9,10 +10,17 @@ func TestBigFileExecutor_Compute(t *testing.T) {
 
 	executor := bigFileExecutor{}
 
-	param := Parameter{
-		Path: []string{"./test_data/"},
+	baseDir, err := getPwd()
+	if err != nil {
+		t.Error(err.Error())
 	}
-	summary := executor.Compute(param, Config{BigFile: BigFileConfig{MaxLines: 800}})
+	testFilePath := filepath.Join(baseDir, "test_data/")
+	param := Parameter{
+		Path: []string{testFilePath},
+	}
+	config := Config{LintersSettings: LintersSettingsConfig{BigFile: BigFileConfig{MaxLines: 800}}}
+
+	summary := executor.Compute(param, config)
 
 	if summary.Value != 0 {
 		t.Errorf(" bigfile executor compute failed, the summary should equal 0")
@@ -22,17 +30,22 @@ func TestBigFileExecutor_Compute(t *testing.T) {
 func TestBigFileExecutor_Compute_Single_File(t *testing.T) {
 
 	executor := bigFileExecutor{}
-
-	param := Parameter{
-		Path: []string{"./test_data/bigfile.go"},
+	baseDir, err := getPwd()
+	if err != nil {
+		t.Error(err.Error())
 	}
-	summary := executor.Compute(param, Config{BigFile: BigFileConfig{MaxLines: 1}})
+	testFilePath := filepath.Join(baseDir, "test_data/bigfile.go")
+	param := Parameter{
+		Path: []string{testFilePath},
+	}
+	config := Config{LintersSettings: LintersSettingsConfig{BigFile: BigFileConfig{MaxLines: 1}}}
+	summary := executor.Compute(param, config)
 
 	if int(summary.Value) != 1 {
 		t.Errorf("bigfile executor compute failed, the summary value should equal 1")
 	}
 
-	if summary.Details["./test_data/bigfile.go"].(int) != 8 {
+	if summary.Details[testFilePath].(int) != 8 {
 		t.Errorf("bigfile executor compute failed, the test file's lines should equal 7")
 	}
 

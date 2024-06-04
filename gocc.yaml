@@ -1,0 +1,24 @@
+reportType: "console"
+ignoreError: false
+linters:
+  enable:
+      - bigFile
+      - longFunc
+      - copyCheck
+      - cyclo
+      - unittest
+      - security
+      - syntax
+linters-settings:
+  bigFile:
+    maxLines: 800
+  longFunc:
+    maxLength: 80
+  cyclo:
+    ignoreRegx: "_test"
+  security:
+    env:
+      - GOVERSION=go1.19
+  copyCheck:
+    threshold: 50
+    ignoreRegx: "_test"
