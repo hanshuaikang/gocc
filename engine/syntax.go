@@ -34,24 +34,14 @@ func (e syntaxExecutor) parseOutPut(path string, output string) (int, map[string
 
 func (e syntaxExecutor) runVet(path string) (int, map[string]interface{}) {
 
-	isDir, err := isDirectory(path)
-	if err != nil {
-		return 0, nil
-	}
-
-	pathArgs := "./..."
-	if !isDir {
-		pathArgs = path
-	}
-
 	var out bytes.Buffer
 	var errOut bytes.Buffer
 
-	cmd := exec.Command("go", "vet", pathArgs)
+	cmd := exec.Command("go", "vet", "./...")
 	cmd.Stdout = &out
 	cmd.Stderr = &errOut
 
-	err = cmd.Run()
+	err := cmd.Run()
 	// go vet 命令如果 err, 则说明有语法错误
 	count, detail := e.parseOutPut(path, errOut.String())
 	if err != nil {
