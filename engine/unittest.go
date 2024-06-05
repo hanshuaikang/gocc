@@ -97,7 +97,7 @@ func (e unitTestExecutor) Compute(param Parameter, config Config) Summary {
 		}
 
 		// 如果不是 go 项目 & 不是 测试文件，则放弃执行
-		if !isGoProj && strings.HasSuffix(path, "_test.go") {
+		if !isGoProj && !strings.HasSuffix(path, "_test.go") {
 			continue
 		}
 		err = os.Chdir(targetPath)
