@@ -26,6 +26,9 @@ func (e syntaxExecutor) parseOutPut(path string, output string) (int, map[string
 	for _, match := range matches {
 		count += 1
 		key := filepath.Join(path, strings.Split(match, " ")[0])
+		if strings.HasSuffix(path, ".go") {
+			key = filepath.Join(filepath.Dir(path), strings.Split(match, " ")[0])
+		}
 		detail[key] = strings.Join(strings.Split(match, " ")[1:], " ")
 
 	}

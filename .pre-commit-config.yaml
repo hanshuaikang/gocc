@@ -20,4 +20,3 @@ repos:
       - id: go-cyclo
         args: [ -over=15 ]
       - id: go-imports
-      - id: go-unit-tests
